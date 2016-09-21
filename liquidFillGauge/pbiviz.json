@@ -1,0 +1,23 @@
+{
+    "visual": {
+        "name": "liquidFillGauge",
+        "displayName": "liquidFillGauge",
+        "guid": "PBI_CV_94E55AB3_5D45_4B62_A49D_19E2109AA028",
+        "visualClassName": "Visual",
+        "version": "1.0.0",
+        "description": "",
+        "supportUrl": "",
+        "gitHubUrl": ""
+    },
+    "apiVersion": "1.1.0",
+    "author": {
+        "name": "",
+        "email": ""
+    },
+    "assets": {
+        "icon": "assets/icon.png"
+    },
+    "externalJS": [],
+    "style": "style/visual.less",
+    "capabilities": "capabilities.json"
+}
