@@ -38,12 +38,7 @@
                     "description": "The name of this data role that is shown to the user"
                 },
                 "kind": {
-                    "type": "string",
-                    "enum": [
-                        "Measure",
-                        "Grouping",
-                        "GroupingOrMeasure"
-                    ],
+                    "type": "number",
                     "description": "The kind of data that can be bound do this role"
                 }
             },
@@ -185,8 +180,7 @@
                             },
                             "required": [
                                 "by",
-                                "select",
-                                "dataReductionAlgorithm"
+                                "select"
                             ]
                         }
                     },
@@ -204,6 +198,11 @@
                         {
                             "required": [
                                 "select"
+                            ]
+                        },
+                        {
+                            "required": [
+                                "group"
                             ]
                         }
                     ]
@@ -647,6 +646,11 @@
                         {
                             "required": [
                                 "numeric"
+                            ]
+                        },
+                        {
+                            "required": [
+                                "text"
                             ]
                         }
                     ]
