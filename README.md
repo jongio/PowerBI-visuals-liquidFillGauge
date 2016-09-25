@@ -2,7 +2,7 @@
 
 This Power BI Custom Visual represents a percentage in a circular wave form bubble. You can use this visual in your reports via the pbiviz file [here](liquidFillGauge/dist/liquidFillGauge.pbiviz).
 
-See how this visual was built [here](http://bit.ly/pbiviz-oss). 
+See how this visual was built [here](http://bit.ly/pbiviz-existing-d3). 
 
 ![](images/liquidFillGauge.png)
 
