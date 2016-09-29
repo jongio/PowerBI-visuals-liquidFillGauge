@@ -1,36 +1,15 @@
 {
     "dataRoles": [
         {
-            "displayName": "Category Data",
-            "name": "category",
-            "kind": 0
-        },
-        {
-            "displayName": "Measure Data",
-            "name": "measure",
+            "displayName": "Value",
+            "name": "value",
             "kind": 1
         }
     ],
     "dataViewMappings": [
         {
-            "categorical": {
-                "categories": {
-                    "for": {
-                        "in": "category"
-                    },
-                    "dataReductionAlgorithm": {
-                        "top": {}
-                    }
-                },
-                "values": {
-                    "select": [
-                        {
-                            "bind": {
-                                "to": "measure"
-                            }
-                        }
-                    ]
-                }
+            "single": {
+                "role": ""
             }
         }
     ]
