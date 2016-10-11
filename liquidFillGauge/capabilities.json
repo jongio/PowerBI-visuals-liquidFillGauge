@@ -8,6 +8,13 @@
     ],
     "dataViewMappings": [
         {
+            "conditions": [
+                {
+                    "value": {
+                        "max": 1
+                    }
+                }
+            ],
             "single": {
                 "role": ""
             }
