@@ -7,7 +7,7 @@ module powerbi.extensibility.visual {
         private gauge: any;
         private svg: d3.Selection<SVGElement>;
         private settings: any;
-        private prevDataViewObjects: any; // workaround temp variable because the PBI SDK doesn't correctly identify style changes. See getSettings method.
+        private prevDataViewObjects: any = {}; // workaround temp variable because the PBI SDK doesn't correctly identify style changes. See getSettings method.
 
         constructor(options: VisualConstructorOptions) {
             this.target = options.element;
@@ -30,7 +30,8 @@ module powerbi.extensibility.visual {
 
             if (dataView && dataView.single && dataView.single.value) {
                 // If we don't have a gauge yet, settings have changed or we just resized, then we need to redraw
-                if (!this.gauge || this.getSettings(dataView.metadata.objects) || (options.type & VisualUpdateType.ResizeEnd)) {
+                var settingsChanged = this.getSettings(dataView.metadata.objects); // workaround because of sdk bug that doesn't notify when only style has changed
+                if (!this.gauge || settingsChanged || (options.type & VisualUpdateType.ResizeEnd)) {
                     this.svg.selectAll("*").remove();
                     this.gauge = loadLiquidFillGauge(this.svg, dataView.single.value, this.settings);
                 } else {
@@ -56,14 +57,14 @@ module powerbi.extensibility.visual {
                     objectEnumeration.push({
                         objectName: objectName,
                         properties: {
+                            textColor: { solid: { color: this.settings.textColor } },
+                            waveTextColor: { solid: { color: this.settings.waveTextColor } },
                             minValue: this.settings.minValue,
                             maxValue: this.settings.maxValue,
                             size: this.settings.textSize,
                             textVertPosition: this.settings.textVertPosition,
                             valueCountUp: this.settings.valueCountUp,
-                            displayPercent: this.settings.displayPercent,
-                            textColor: { solid: { color: this.settings.textColor } },
-                            waveTextColor: { solid: { color: this.settings.waveTextColor } }
+                            displayPercent: this.settings.displayPercent
                         },
                         selector: null
                     });
@@ -72,6 +73,7 @@ module powerbi.extensibility.visual {
                     objectEnumeration.push({
                         objectName: objectName,
                         properties: {
+                            waveColor: { solid: { color: this.settings.waveColor } },
                             waveHeight: this.settings.waveHeight,
                             waveHeightScaling: this.settings.waveHeightScaling,
                             waveCount: this.settings.waveCount,
@@ -79,8 +81,7 @@ module powerbi.extensibility.visual {
                             waveRiseTime: this.settings.waveRiseTime,
                             waveAnimate: this.settings.waveAnimate,
                             waveAnimateTime: this.settings.waveAnimateTime,
-                            waveOffset: this.settings.waveOffset,
-                            waveColor: { solid: { color: this.settings.waveColor } }
+                            waveOffset: this.settings.waveOffset
                         },
                         selector: null
                     });
@@ -106,11 +107,11 @@ module powerbi.extensibility.visual {
         }
 
         // Reads in settings values from the DataViewObjects and returns a settings object that the liquidFillGauge library understands
+        @logExceptions()
         private getSettings(objects: DataViewObjects): boolean {
             var settingsChanged = false;
 
-            if (!this.settings || (JSON.stringify(objects) !== JSON.stringify(this.prevDataViewObjects))) {
-
+            if (typeof this.settings == 'undefined' || (JSON.stringify(objects) !== JSON.stringify(this.prevDataViewObjects))) {
                 this.settings = {
                     minValue: getValue<number>(objects, 'text', 'minValue', 0), // The gauge minimum value.
                     maxValue: getValue<number>(objects, 'text', 'maxValue', 100), // The gauge maximum value.
