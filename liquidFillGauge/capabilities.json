@@ -12,5 +12,178 @@
                 "role": ""
             }
         }
-    ]
+    ],
+    "objects": {
+        "text": {
+            "displayName": "Text",
+            "properties": {
+                "textColor": {
+                    "displayName": "Text Color",
+                    "description": "The color of the value text when the wave does not overlap it.",
+                    "type": {
+                        "fill": {
+                            "solid": {
+                                "color": true
+                            }
+                        }
+                    }
+                },
+                "waveTextColor": {
+                    "displayName": "Wave Text Color",
+                    "description": "The color of the value text when the wave overlaps it.",
+                    "type": {
+                        "fill": {
+                            "solid": {
+                                "color": true
+                            }
+                        }
+                    }
+                },
+                "minValue": {
+                    "displayName": "Min Value",
+                    "description": "The gauge minimum value.",
+                    "type": {
+                        "numeric": true
+                    }
+                },
+                "maxValue": {
+                    "displayName": "Max Value",
+                    "description": "The gauge maximum value.",
+                    "type": {
+                        "numeric": true
+                    }
+                },
+                "size": {
+                    "displayName": "Text Size",
+                    "description": "The relative height of the text to display in the wave circle. 1 = 50%",
+                    "type": {
+                        "numeric": true
+                    }
+                },
+                "textVertPosition": {
+                    "displayName": "Vertical Position",
+                    "description": "The height at which to display the percentage text within the wave circle. 0 = bottom, 1 = top.",
+                    "type": {
+                        "numeric": true
+                    }
+                },
+                "valueCountUp": {
+                    "displayName": "Count Up",
+                    "description": "If true, the displayed value counts up from 0 to its final value upon loading. If false, the final value is displayed.",
+                    "type": {
+                        "bool": true
+                    }
+                },
+                "displayPercent": {
+                    "displayName": "Display Percent",
+                    "description": "If true, a % symbol is displayed after the value.",
+                    "type": {
+                        "bool": true
+                    }
+                }
+            }
+        },
+        "circle": {
+            "displayName": "Circle",
+            "properties": {
+                "circleColor": {
+                    "displayName": "Color",
+                    "description": "The color of the outer circle.",
+                    "type": {
+                        "fill": {
+                            "solid": {
+                                "color": true
+                            }
+                        }
+                    }
+                },
+                "circleThickness": {
+                    "displayName": "Thickness",
+                    "description": "The outer circle thickness as a percentage of its radius.",
+                    "type": {
+                        "numeric": true
+                    }
+                },
+                "circleFillGap": {
+                    "displayName": "Fill Gap",
+                    "description": "The size of the gap between the outer circle and wave circle as a percentage of the outer circles radius.",
+                    "type": {
+                        "numeric": true
+                    }
+                }
+            }
+        },
+        "wave": {
+            "displayName": "Wave",
+            "properties": {
+                "waveColor": {
+                    "displayName": "Color",
+                    "description": "The color of the fill wave.",
+                    "type": {
+                        "fill": {
+                            "solid": {
+                                "color": true
+                            }
+                        }
+                    }
+                },
+                "waveHeight": {
+                    "displayName": "Height",
+                    "description": "The wave height as a percentage of the radius of the wave circle.",
+                    "type": {
+                        "numeric": true
+                    }
+                },
+                "waveHeightScaling": {
+                    "displayName": "Height Scaling",
+                    "description": "Controls wave size scaling at low and high fill percentages. When true, wave height reaches its maximum at 50% fill, and minimum at 0% and 100% fill. This helps to prevent the wave from making the wave circle from appear totally full or empty when near its minimum or maximum fill.",
+                    "type": {
+                        "bool": true
+                    }
+                },
+                "waveCount": {
+                    "displayName": "Count",
+                    "description": "The number of full waves per width of the wave circle.",
+                    "type": {
+                        "numeric": true
+                    }
+                },
+                "waveRise": {
+                    "displayName": "Rise",
+                    "description": "Controls if the wave should rise from 0 to its full height, or start at its full height.",
+                    "type": {
+                        "bool": true
+                    }
+                },
+                "waveRiseTime": {
+                    "displayName": "Rise Time",
+                    "description": "The amount of time in milliseconds for the wave to rise from 0 to its final height.",
+                    "type": {
+                        "numeric": true
+                    }
+                },
+                "waveAnimate": {
+                    "displayName": "Animate",
+                    "description": "Controls if the wave scrolls or is static.",
+                    "type": {
+                        "bool": true
+                    }
+                },
+                "waveAnimateTime": {
+                    "displayName": "Animate Time",
+                    "description": "The amount of time in milliseconds for a full wave to enter the wave circle.",
+                    "type": {
+                        "numeric": true
+                    }
+                },
+                "waveOffset": {
+                    "displayName": "Offset",
+                    "description": "The amount to initially offset the wave. 0 = no offset. 1 = offset of one full wave.",
+                    "type": {
+                        "numeric": true
+                    }
+                }
+            }
+        }
+    }
 }

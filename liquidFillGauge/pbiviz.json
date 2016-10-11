@@ -5,14 +5,14 @@
         "guid": "PBI_CV_94E55AB3_5D45_4B62_A49D_19E2109AA028",
         "visualClassName": "Visual",
         "version": "1.0.0",
-        "description": "",
-        "supportUrl": "",
-        "gitHubUrl": ""
+        "description": "A circular liquid fill gauge wave control.",
+        "supportUrl": "http://bit.ly/emailjon",
+        "gitHubUrl": "https://github.com/jonbgallant/PowerBI-visuals-liquidFillGauge"
     },
     "apiVersion": "1.1.0",
     "author": {
-        "name": "",
-        "email": ""
+        "name": "Jon Gallant",
+        "email": "http://bit.ly/emailjon"
     },
     "assets": {
         "icon": "assets/icon.png"

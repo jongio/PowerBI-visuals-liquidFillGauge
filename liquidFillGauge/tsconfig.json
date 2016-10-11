@@ -12,6 +12,7 @@
         "src/liquidFillGauge.js",
         "src/liquidFillGauge.d.ts",
         "src/visual.ts",
+        "src/objectEnumerationUtility.ts",
         "typings/index.d.ts"
     ]
 }
