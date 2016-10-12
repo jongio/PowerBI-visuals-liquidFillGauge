@@ -31,7 +31,8 @@ module powerbi.extensibility.visual {
             if (dataView && dataView.single && dataView.single.value) {
                 // If we don't have a gauge yet, settings have changed or we just resized, then we need to redraw
                 var settingsChanged = this.getSettings(dataView.metadata.objects); // workaround because of sdk bug that doesn't notify when only style has changed
-                if (!this.gauge || settingsChanged || (options.type & VisualUpdateType.ResizeEnd)) {
+
+                if (!this.gauge || settingsChanged || ((options.type & VisualUpdateType.Resize) || options.type & VisualUpdateType.ResizeEnd)) {
                     this.svg.selectAll("*").remove();
                     this.gauge = loadLiquidFillGauge(this.svg, dataView.single.value, this.settings);
                 } else {
