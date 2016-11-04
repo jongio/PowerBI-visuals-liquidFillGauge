@@ -82,8 +82,15 @@
                     }
                 },
                 "displayPercent": {
-                    "displayName": "Display Percent",
-                    "description": "If true, a % symbol is displayed after the value.",
+                    "displayName": "Display Percent Sign",
+                    "description": "If true, a % sign is displayed after the value.",
+                    "type": {
+                        "bool": true
+                    }
+                },
+                "calculatePercentage": {
+                    "displayName": "Calculate Percentage",
+                    "description": "If true, converts a decimal value to a percentage of the Max Value property.",
                     "type": {
                         "bool": true
                     }

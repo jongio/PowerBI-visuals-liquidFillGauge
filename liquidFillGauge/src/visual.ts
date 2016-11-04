@@ -65,7 +65,8 @@ module powerbi.extensibility.visual {
                             size: this.settings.textSize,
                             textVertPosition: this.settings.textVertPosition,
                             valueCountUp: this.settings.valueCountUp,
-                            displayPercent: this.settings.displayPercent
+                            displayPercent: this.settings.displayPercent,
+                            calculatePercentage: this.settings.calculatePercentage
                         },
                         selector: null
                     });
@@ -132,6 +133,7 @@ module powerbi.extensibility.visual {
                     textSize: getValue<number>(objects, 'text', 'size', 1), // The relative height of the text to display in the wave circle. 1 = 50%
                     valueCountUp: getValue<boolean>(objects, 'text', 'valueCountUp', true), // If true, the displayed value counts up from 0 to it's final value upon loading. If false, the final value is displayed.
                     displayPercent: getValue<boolean>(objects, 'text', 'displayPercent', true), // If true, a % symbol is displayed after the value.
+                    calculatePercentage: getValue<boolean>(objects, 'text', 'calculatePercentage', false),
                     textColor: getValue<Fill>(objects, 'text', 'textColor', { solid: { color: "#045681" } }).solid.color, // The color of the value text when the wave does not overlap it.
                     waveTextColor: getValue<Fill>(objects, 'text', 'waveTextColor', { solid: { color: "#A4DBf8" } }).solid.color // The color of the value text when the wave overlaps it.
                 };
