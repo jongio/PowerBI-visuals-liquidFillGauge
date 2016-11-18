@@ -50,6 +50,10 @@ module powerbi.extensibility.visual {
          */
         @logExceptions()
         public enumerateObjectInstances(options: EnumerateVisualObjectInstancesOptions): VisualObjectInstanceEnumeration {
+            if (!this.settings) {
+                return;
+            }
+            
             let objectName = options.objectName;
             let objectEnumeration: VisualObjectInstance[] = [];
 
