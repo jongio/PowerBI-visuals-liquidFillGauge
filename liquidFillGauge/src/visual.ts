@@ -28,7 +28,7 @@ module powerbi.extensibility.visual {
             // Grab the dataview object
             var dataView = options.dataViews[0];
 
-            if (dataView && dataView.single && dataView.single.value) {
+            if (dataView) {
                 // If we don't have a gauge yet, settings have changed or we just resized, then we need to redraw
                 var settingsChanged = this.getSettings(dataView.metadata.objects); // workaround because of sdk bug that doesn't notify when only style has changed
 

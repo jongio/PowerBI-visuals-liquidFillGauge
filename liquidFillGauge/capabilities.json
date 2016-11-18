@@ -3,7 +3,7 @@
         {
             "displayName": "Value",
             "name": "value",
-            "kind": 1
+            "kind": "Measure"
         }
     ],
     "dataViewMappings": [

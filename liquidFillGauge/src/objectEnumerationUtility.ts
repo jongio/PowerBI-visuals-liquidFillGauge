@@ -12,7 +12,7 @@ module powerbi.extensibility.visual {
         if (objects) {
             let object = objects[objectName];
             if (object) {
-                let property: T = object[propertyName];
+                let property: T = <T>object[propertyName];
                 if (property !== undefined) {
                     if (maxValue && property > maxValue) {
                         return maxValue;
@@ -42,9 +42,9 @@ module powerbi.extensibility.visual {
             if (categoryObject) {
                 let object = categoryObject[objectName];
                 if (object) {
-                    let property: T = object[propertyName];
-                    if (property !== undefined) {
+                    let property: T = <T>object[propertyName];
 
+                    if (property !== undefined) {
                         return property;
                     }
                 }
