@@ -28,7 +28,7 @@ module powerbi.extensibility.visual {
             // Grab the dataview object
             var dataView = options.dataViews[0];
 
-            if (dataView) {
+            if (dataView && typeof dataView.single != 'undefined') {
                 // If we don't have a gauge yet, settings have changed or we just resized, then we need to redraw
                 var settingsChanged = this.getSettings(dataView.metadata.objects); // workaround because of sdk bug that doesn't notify when only style has changed
 
@@ -116,12 +116,12 @@ module powerbi.extensibility.visual {
             if (typeof this.settings == 'undefined' || (JSON.stringify(objects) !== JSON.stringify(this.prevDataViewObjects))) {
                 this.settings = {
                     minValue: getValue<number>(objects, 'text', 'minValue', 0), // The gauge minimum value.
-                    maxValue: getValue<number>(objects, 'text', 'maxValue', 100), // The gauge maximum value.
-                    circleThickness: getValue<number>(objects, 'circle', 'circleThickness', .05, .9), // The outer circle thickness as a percentage of it's radius.
+                    maxValue: getValue<number>(objects, 'text', 'maxValue', 100, { minValue: .000001 }), // The gauge maximum value.
+                    circleThickness: getValue<number>(objects, 'circle', 'circleThickness', .05, { maxValue: 100 }), // The outer circle thickness as a percentage of it's radius.
                     circleFillGap: getValue<number>(objects, 'circle', 'circleFillGap', .05), // The size of the gap between the outer circle and wave circle as a percentage of the outer circles radius.
                     circleColor: getValue<Fill>(objects, 'circle', 'circleColor', { solid: { color: "#178BCA" } }).solid.color, // The color of the outer circle.
                     waveHeight: getValue<number>(objects, 'wave', 'waveHeight', .05), // The wave height as a percentage of the radius of the wave circle.
-                    waveCount: getValue<number>(objects, 'wave', 'waveCount', 5), // The number of full waves per width of the wave circle.
+                    waveCount: getValue<number>(objects, 'wave', 'waveCount', 5, { minValue: 1 }), // The number of full waves per width of the wave circle.
                     waveRiseTime: getValue<number>(objects, 'wave', 'waveRiseTime', 1000), // The amount of time in milliseconds for the wave to rise from 0 to it's final height.
                     waveAnimateTime: getValue<number>(objects, 'wave', 'waveAnimateTime', 18000), // The amount of time in milliseconds for a full wave to enter the wave circle.
                     waveRise: getValue<boolean>(objects, 'wave', 'waveRise', true), // Control if the wave should rise from 0 to it's full height, or start at it's full height.
