@@ -15,7 +15,7 @@
                     }
                 }
             ],
-            "single": {
+            "single": {  
                 "role": ""
             }
         }
@@ -195,6 +195,60 @@
                     "description": "The amount to initially offset the wave. 0 = no offset. 1 = offset of one full wave.",
                     "type": {
                         "numeric": true
+                    }
+                }
+            }
+        },
+        "themes": {
+            "displayName": "Themes",
+            "properties": {
+                "lowThemeOverrideMaxValue": {
+                    "displayName": "Low Theme Max Value",
+                    "description": "JSON definition of a theme override.",
+                    "type": {
+                        "numeric": true
+                    }
+                },
+                "lowThemeOverrideJson": {
+                    "displayName": "Low Theme Json",
+                    "description": "JSON definition of a theme override.",
+                    "type": {
+                        "text": true
+                    }
+                },
+                "midThemeOverrideMinValue": {
+                    "displayName": "Mid Theme Min Value",
+                    "description": "JSON definition of a theme override.",
+                    "type": {
+                        "numeric": true
+                    }
+                },
+                 "midThemeOverrideMaxValue": {
+                    "displayName": "Mid Theme Max Value",
+                    "description": "JSON definition of a theme override.",
+                    "type": {
+                        "numeric": true
+                    }
+                },
+                "midThemeOverrideJson": {
+                    "displayName": "Mid Theme Json",
+                    "description": "JSON definition of a theme override.",
+                    "type": {
+                        "text": true
+                    }
+                },
+                 "highThemeOverrideMinValue": {
+                    "displayName": "High Theme Min Value",
+                    "description": "JSON definition of a theme override.",
+                    "type": {
+                        "numeric": true
+                    }
+                },
+                "highThemeOverrideJson": {
+                    "displayName": "High Theme Json",
+                    "description": "JSON definition of a theme override.",
+                    "type": {
+                        "text": true
                     }
                 }
             }

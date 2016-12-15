@@ -8,6 +8,7 @@ module powerbi.extensibility.visual {
         private svg: d3.Selection<SVGElement>;
         private settings: any;
         private prevDataViewObjects: any = {}; // workaround temp variable because the PBI SDK doesn't correctly identify style changes. See getSettings method.
+        private prevTheme: any = {};
 
         constructor(options: VisualConstructorOptions) {
             this.target = options.element;
@@ -29,15 +30,19 @@ module powerbi.extensibility.visual {
             var dataView = options.dataViews[0];
 
             if (dataView && typeof dataView.single != 'undefined') {
+
+                var value: PrimitiveValue = dataView.single.value;
+
                 // If we don't have a gauge yet, settings have changed or we just resized, then we need to redraw
                 var settingsChanged = this.getSettings(dataView.metadata.objects); // workaround because of sdk bug that doesn't notify when only style has changed
+                var themeChanged = this.applyThemeOverride(value);
 
-                if (!this.gauge || settingsChanged || ((options.type & VisualUpdateType.Resize) || options.type & VisualUpdateType.ResizeEnd)) {
+                if (!this.gauge || themeChanged || settingsChanged || ((options.type & VisualUpdateType.Resize) || options.type & VisualUpdateType.ResizeEnd)) {
                     this.svg.selectAll("*").remove();
-                    this.gauge = loadLiquidFillGauge(this.svg, dataView.single.value, this.settings);
+                    this.gauge = loadLiquidFillGauge(this.svg, value, this.settings);
                 } else {
                     // This means we have a gauge and the only thing that changed was the data.
-                    this.gauge.update(dataView.single.value)
+                    this.gauge.update(value)
                 }
             }
         }
@@ -53,7 +58,7 @@ module powerbi.extensibility.visual {
             if (!this.settings) {
                 return;
             }
-            
+
             let objectName = options.objectName;
             let objectEnumeration: VisualObjectInstance[] = [];
 
@@ -103,6 +108,22 @@ module powerbi.extensibility.visual {
                         selector: null
                     });
                     break;
+                case 'themes':
+                    objectEnumeration.push({
+                        objectName: objectName,
+                        properties: {
+                            lowThemeOverrideMaxValue: this.settings.lowThemeOverrideMaxValue,
+                            lowThemeOverrideJson: this.settings.lowThemeOverrideJson,
+                            midThemeOverrideMinValue: this.settings.midThemeOverrideMinValue,
+                            midThemeOverrideMaxValue: this.settings.midThemeOverrideMaxValue,
+                            midThemeOverrideJson: this.settings.midThemeOverrideJson,
+                            highThemeOverrideMinValue: this.settings.highThemeOverrideMinValue,
+                            highThemeOverrideJson: this.settings.highThemeOverrideJson
+                        },
+                        selector: null
+                    });
+                    break;
+
             };
 
             return objectEnumeration;
@@ -118,6 +139,7 @@ module powerbi.extensibility.visual {
             var settingsChanged = false;
 
             if (typeof this.settings == 'undefined' || (JSON.stringify(objects) !== JSON.stringify(this.prevDataViewObjects))) {
+
                 this.settings = {
                     minValue: getValue<number>(objects, 'text', 'minValue', 0), // The gauge minimum value.
                     maxValue: getValue<number>(objects, 'text', 'maxValue', 100, { minValue: .000001 }), // The gauge maximum value.
@@ -139,15 +161,58 @@ module powerbi.extensibility.visual {
                     displayPercent: getValue<boolean>(objects, 'text', 'displayPercent', true), // If true, a % symbol is displayed after the value.
                     calculatePercentage: getValue<boolean>(objects, 'text', 'calculatePercentage', false),
                     textColor: getValue<Fill>(objects, 'text', 'textColor', { solid: { color: "#045681" } }).solid.color, // The color of the value text when the wave does not overlap it.
-                    waveTextColor: getValue<Fill>(objects, 'text', 'waveTextColor', { solid: { color: "#A4DBf8" } }).solid.color // The color of the value text when the wave overlaps it.
-                };
+                    waveTextColor: getValue<Fill>(objects, 'text', 'waveTextColor', { solid: { color: "#A4DBf8" } }).solid.color, // The color of the value text when the wave overlaps it.
+                    lowThemeOverrideMaxValue: getValue<number>(objects, 'themes', 'lowThemeOverrideMaxValue', null),
+                    lowThemeOverrideJson: getValue<string>(objects, 'themes', 'lowThemeOverrideJson', ''),
+                    midThemeOverrideMinValue: getValue<number>(objects, 'themes', 'midThemeOverrideMinValue', null),
+                    midThemeOverrideMaxValue: getValue<number>(objects, 'themes', 'midThemeOverrideMaxValue', null),
+                    midThemeOverrideJson: getValue<string>(objects, 'themes', 'midThemeOverrideJson', ''),
+                    highThemeOverrideMinValue: getValue<number>(objects, 'themes', 'highThemeOverrideMinValue', null),
+                    highThemeOverrideJson: getValue<string>(objects, 'themes', 'highThemeOverrideJson', '')
 
+                };
                 settingsChanged = true;
             }
+
             this.prevDataViewObjects = objects;
+
+
             return settingsChanged;
         }
+
+        private applyThemeOverride(value: PrimitiveValue): boolean {
+            //debugger;
+            var themeOverride: any;
+            
+            if (this.settings.lowThemeOverrideMaxValue && (value <= this.settings.lowThemeOverrideMaxValue)) {
+                themeOverride = this.settings.lowThemeOverrideJson;
+            } else if (this.settings.midThemeOverrideMinValue && this.settings.midThemeOverrideMaxValue
+                && (value >= this.settings.midThemeOverrideMinValue && value <= this.settings.midThemeOverrideMaxValue)) {
+                themeOverride = this.settings.midThemeOverrideJson;
+            } else if (this.settings.highThemeOverrideMinValue && (value >= this.settings.highThemeOverrideMinValue)) {
+                themeOverride = this.settings.highThemeOverrideJson;
+            }
+
+            if (themeOverride) {
+                try {
+                    themeOverride = JSON.parse(themeOverride);
+                    for (var key in this.settings) {
+                        if (!themeOverride.hasOwnProperty(key)) {
+                            themeOverride[key] = this.settings[key];
+                        }
+                    }
+                    this.settings = themeOverride;
+                } catch (error) {
+                    console.log(error);
+                }
+            }
+
+            var themeChanged = JSON.stringify(this.prevTheme) !== JSON.stringify(this.settings);
+            this.prevTheme = this.settings;
+            return themeChanged;
+        }
     }
+
 
     export function logExceptions(): MethodDecorator {
         return function (target: Object, propertyKey: string, descriptor: TypedPropertyDescriptor<Function>)
