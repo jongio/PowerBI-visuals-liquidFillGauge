@@ -1,5 +1,3 @@
-/// <amd-dependency path='liquidFillGauge'>
-
 module powerbi.extensibility.visual {
 
     export class Visual implements IVisual {
@@ -34,7 +32,7 @@ module powerbi.extensibility.visual {
 
                 if (!this.gauge || settingsChanged || ((options.type & VisualUpdateType.Resize) || options.type & VisualUpdateType.ResizeEnd)) {
                     this.svg.selectAll("*").remove();
-                    this.gauge = loadLiquidFillGauge(this.svg, dataView.single.value, this.settings);
+                    this.gauge = lfg.loadLiquidFillGauge(this.svg, dataView.single.value, this.settings);
                 } else {
                     // This means we have a gauge and the only thing that changed was the data.
                     this.gauge.update(dataView.single.value)
@@ -53,7 +51,7 @@ module powerbi.extensibility.visual {
             if (!this.settings) {
                 return;
             }
-            
+
             let objectName = options.objectName;
             let objectEnumeration: VisualObjectInstance[] = [];
 
@@ -70,7 +68,9 @@ module powerbi.extensibility.visual {
                             textVertPosition: this.settings.textVertPosition,
                             valueCountUp: this.settings.valueCountUp,
                             displayPercent: this.settings.displayPercent,
-                            calculatePercentage: this.settings.calculatePercentage
+                            calculatePercentage: this.settings.calculatePercentage,
+                            multiplyBy: this.settings.multiplyBy
+
                         },
                         selector: null
                     });
@@ -138,6 +138,7 @@ module powerbi.extensibility.visual {
                     valueCountUp: getValue<boolean>(objects, 'text', 'valueCountUp', true), // If true, the displayed value counts up from 0 to it's final value upon loading. If false, the final value is displayed.
                     displayPercent: getValue<boolean>(objects, 'text', 'displayPercent', true), // If true, a % symbol is displayed after the value.
                     calculatePercentage: getValue<boolean>(objects, 'text', 'calculatePercentage', false),
+                    multiplyBy: getValue<number>(objects, 'text', 'multiplyBy', 1),
                     textColor: getValue<Fill>(objects, 'text', 'textColor', { solid: { color: "#045681" } }).solid.color, // The color of the value text when the wave does not overlap it.
                     waveTextColor: getValue<Fill>(objects, 'text', 'waveTextColor', { solid: { color: "#A4DBf8" } }).solid.color // The color of the value text when the wave overlaps it.
                 };

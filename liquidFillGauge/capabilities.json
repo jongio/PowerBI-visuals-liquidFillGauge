@@ -94,6 +94,13 @@
                     "type": {
                         "bool": true
                     }
+                },
+                "multiplyBy": {
+                    "displayName": "Multiply By",
+                    "description": "A number that you would like to multiply the data value by. For example, if you data is .89 and you want it to display 89, then you would enter 100 here.",
+                    "type": {
+                        "numeric": true
+                    }
                 }
             }
         },
