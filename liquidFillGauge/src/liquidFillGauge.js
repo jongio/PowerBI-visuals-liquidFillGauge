@@ -43,14 +43,14 @@
         var radius = Math.min(parseInt(gauge.style("width")), parseInt(gauge.style("height"))) / 2;
         var locationX = parseInt(gauge.style("width")) / 2 - radius;
         var locationY = parseInt(gauge.style("height")) / 2 - radius;
-        
+
         if (config.multiplyBy != 1) {
             value = value * config.multiplyBy;
         }
 
         var fillPercent = Math.max(config.minValue, Math.min(config.maxValue, value)) / config.maxValue;
 
-        if(config.calculatePercentage){
+        if (config.calculatePercentage) {
             value = fillPercent * 100;
         }
 
@@ -237,7 +237,16 @@
                     .duration(config.waveRiseTime)
                     .tween("text", textTween);
 
+                if (config.multiplyBy != 1) {
+                    value = value * config.multiplyBy;
+                }
+
                 var fillPercent = Math.max(config.minValue, Math.min(config.maxValue, value)) / config.maxValue;
+
+                if (config.calculatePercentage) {
+                    value = fillPercent * 100;
+                }
+
                 var waveHeight = fillCircleRadius * waveHeightScale(fillPercent * 100);
                 var waveRiseScale = d3.scale.linear()
                     // The clipping area size is the height of the fill circle + the wave height, so we position the clip wave
