@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ContentApp">
+  <Id>FD6C3E7D-C20D-446B-8770-A1A01E8E4C57</Id>
+  <Version>1.0.3.0</Version>
+  <ProviderName>Jon Gallant</ProviderName>
+  <DefaultLocale>en-US</DefaultLocale>
+  <DisplayName DefaultValue="Liquid Fill Gauge"/>
+  <Description DefaultValue="This visual represents a fill percent with an animated wave."/>
+  <IconUrl DefaultValue="https://visuals.azureedge.net/app-store/PowerBI_icon32x32.png"/>
+  <SupportUrl DefaultValue="http://bit.ly/emailjon"/>
+  <Requirements>
+    <Sets>
+      <Set Name="DataAnalytics.PowerBI" MinVersion="1.1"/>
+    </Sets>
+  </Requirements>
+  <DefaultSettings>
+    <SourceLocation DefaultValue="https://visuals.azureedge.net/app-store/liquidFillGauge.1.0.3.0.pbiviz"/>
+    <RequestedWidth>100</RequestedWidth>
+    <RequestedHeight>100</RequestedHeight>
+  </DefaultSettings>
+  <Permissions>ReadWriteDocument</Permissions>
+</OfficeApp>
