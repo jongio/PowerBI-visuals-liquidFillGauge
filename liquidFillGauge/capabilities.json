@@ -101,6 +101,31 @@
                     "type": {
                         "numeric": true
                     }
+                },
+                "function":{
+                    "displayName": "Function",
+                    "description": "None, Absolute, Truncate, Round, Ceiling, Floor",
+                    "type": {
+                        "enumeration": [{
+                            "value": "none",
+                            "displayName": "None"
+                        }, {
+                            "value": "absolute",
+                            "displayName": "Absolute"
+                        }, {
+                            "value": "truncate",
+                            "displayName": "Truncate"
+                        }, {
+                            "value": "round",
+                            "displayName": "Round"
+                        }, {
+                            "value": "ceiling",
+                            "displayName": "Ceiling"
+                        }, {
+                            "value": "floor",
+                            "displayName": "Floor"
+                        }]
+                    }
                 }
             }
         },

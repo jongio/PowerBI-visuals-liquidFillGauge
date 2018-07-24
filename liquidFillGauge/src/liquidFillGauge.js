@@ -30,6 +30,7 @@
             displayPercent: true, // If true, a % symbol is displayed after the value.
             calculatePercentage: false,
             multiplyBy: 1,
+            function: 'none',
             textColor: "#045681", // The color of the value text when the wave does not overlap it.
             waveTextColor: "#A4DBf8" // The color of the value text when the wave overlaps it.
         };
@@ -37,6 +38,8 @@
 
     lfg.loadLiquidFillGauge = function (element, value, config) {
         if (config == null) config = liquidFillGaugeDefaultSettings();
+        
+        value = applyFunction(value, config.function);
 
         var gauge = element;
         var className = gauge.attr("class");
@@ -214,8 +217,26 @@
                 });
         }
 
+        function applyFunction(value, func){
+            switch (func){
+                case 'none': 
+                    return value;
+                case 'absolute':
+                    return Math.abs(value);
+                case 'truncate':
+                    return Math.trunc(value);
+                case 'round':
+                    return Math.round(value);
+                case 'ceiling':
+                    return Math.ceil(value);
+                case 'floor':
+                    return Math.floor(value);
+            } 
+        }
+
         function GaugeUpdater() {
             this.update = function (value) {
+                value = applyFunction(value, config.function);
                 var newFinalValue = parseFloat(value).toFixed(2);
                 var textRounderUpdater = function (value) { return Math.round(value); };
                 if (parseFloat(newFinalValue) != parseFloat(textRounderUpdater(newFinalValue))) {

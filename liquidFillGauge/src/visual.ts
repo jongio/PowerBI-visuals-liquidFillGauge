@@ -69,8 +69,8 @@ module powerbi.extensibility.visual {
                             valueCountUp: this.settings.valueCountUp,
                             displayPercent: this.settings.displayPercent,
                             calculatePercentage: this.settings.calculatePercentage,
-                            multiplyBy: this.settings.multiplyBy
-
+                            multiplyBy: this.settings.multiplyBy,
+                            function: this.settings.function
                         },
                         selector: null
                     });
@@ -139,6 +139,7 @@ module powerbi.extensibility.visual {
                     displayPercent: getValue<boolean>(objects, 'text', 'displayPercent', true), // If true, a % symbol is displayed after the value.
                     calculatePercentage: getValue<boolean>(objects, 'text', 'calculatePercentage', false),
                     multiplyBy: getValue<number>(objects, 'text', 'multiplyBy', 1),
+                    function: getValue<TextFunctionType>(objects, 'text', 'function', TextFunctionType.none),
                     textColor: getValue<Fill>(objects, 'text', 'textColor', { solid: { color: "#045681" } }).solid.color, // The color of the value text when the wave does not overlap it.
                     waveTextColor: getValue<Fill>(objects, 'text', 'waveTextColor', { solid: { color: "#A4DBf8" } }).solid.color // The color of the value text when the wave overlaps it.
                 };

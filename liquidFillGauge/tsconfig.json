@@ -11,6 +11,7 @@
     ".api/v1.2.0/PowerBI-visuals.d.ts",
     "typings/index.d.ts",
     "src/liquidFillGauge.d.ts",
+    "src/enums.ts",
     "src/visual.ts",
     "src/objectEnumerationUtility.ts"
   ]
